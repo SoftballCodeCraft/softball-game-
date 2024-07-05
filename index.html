@@ -74,6 +74,13 @@
             border-radius: 50%;
         }
 
+        .rectangle {
+            position: absolute;
+            width: 10%;
+            height: 10%;
+            background: blue;
+        }
+
         .title {
             margin-top: 20px;
             font-size: 4rem;
@@ -87,10 +94,18 @@
 <body>
     <div class="field">
         <div class="diamond">
-            <div class="base top-left"></div>
-            <div class="base top-right"></div>
-            <div class="base bottom-left"></div>
-            <div class="base bottom-right"></div>
+            <div class="base top-left">
+                <div class="rectangle"></div>
+            </div>
+            <div class="base top-right">
+                <div class="rectangle"></div>
+            </div>
+            <div class="base bottom-left">
+                <div class="rectangle"></div>
+            </div>
+            <div class="base bottom-right">
+                <div class="rectangle"></div>
+            </div>
             <div class="circle"></div>
         </div>
         <h1 class="title">Softball</h1>
@@ -99,14 +114,21 @@
         document.addEventListener('DOMContentLoaded', () => {
             const circle = document.querySelector('.circle');
             const diamond = document.querySelector('.diamond');
+            const rectangles = document.querySelectorAll('.rectangle');
 
             diamond.addEventListener('click', () => {
                 const maxX = diamond.clientWidth - circle.clientWidth;
                 const maxY = diamond.clientHeight - circle.clientHeight;
                 const randomX = Math.floor(Math.random() * maxX);
                 const randomY = Math.floor(Math.random() * maxY);
-                
+
                 circle.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+                // Move rectangle to a random base
+                const randomBaseIndex = Math.floor(Math.random() * 4); // 0 to 3
+                const randomBase = rectangles[randomBaseIndex].parentElement;
+                rectangles.forEach(rectangle => rectangle.style.display = 'none');
+                rectangles[randomBaseIndex].style.display = 'block';
             });
         });
     </script>
