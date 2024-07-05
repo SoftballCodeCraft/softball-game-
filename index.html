@@ -13,6 +13,7 @@
             justify-content: center;
             align-items: center;
             background: #f0f0f0;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         .field {
@@ -76,14 +77,17 @@
 
         .rectangle {
             position: absolute;
-            width: 200%; /* 20 times larger than the base */
-            height: 200%; /* 20 times larger than the base */
+            width: 20%; /* 5 times smaller than the base */
+            height: 20%; /* 5 times smaller than the base */
             background: blue;
             display: none; /* Initially hide rectangles */
+            transition: transform 0.3s ease; /* Add transition for smooth movement */
         }
 
         .title {
-            margin-top: 20px;
+            position: absolute;
+            top: 10%;
+            left: 10%;
             font-size: 4rem;
             color: pink;
             text-shadow: 2px 2px green;
@@ -113,18 +117,10 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const circle = document.querySelector('.circle');
             const diamond = document.querySelector('.diamond');
             const rectangles = document.querySelectorAll('.rectangle');
 
             diamond.addEventListener('click', () => {
-                const maxX = diamond.clientWidth - circle.clientWidth;
-                const maxY = diamond.clientHeight - circle.clientHeight;
-                const randomX = Math.floor(Math.random() * maxX);
-                const randomY = Math.floor(Math.random() * maxY);
-
-                circle.style.transform = `translate(${randomX}px, ${randomY}px)`;
-
                 // Move rectangle to a random base
                 const randomBaseIndex = Math.floor(Math.random() * 4); // 0 to 3
                 const randomBase = rectangles[randomBaseIndex].parentElement;
@@ -137,8 +133,9 @@
                 const rectHeight = rectangles[randomBaseIndex].offsetHeight;
                 const rectX = baseRect.left + baseRect.width / 2 - rectWidth / 2;
                 const rectY = baseRect.top + baseRect.height / 2 - rectHeight / 2;
-                rectangles[randomBaseIndex].style.left = `${rectX}px`;
-                rectangles[randomBaseIndex].style.top = `${rectY}px`;
+                
+                // Animate the movement using transform for smoother transition
+                rectangles[randomBaseIndex].style.transform = `translate(${rectX}px, ${rectY}px)`;
             });
         });
     </script>
