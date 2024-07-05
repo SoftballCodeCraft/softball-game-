@@ -76,9 +76,10 @@
 
         .rectangle {
             position: absolute;
-            width: 10%;
-            height: 10%;
+            width: 80%; /* 8 times larger than the base */
+            height: 80%; /* 8 times larger than the base */
             background: blue;
+            display: none; /* Initially hide rectangles */
         }
 
         .title {
@@ -129,6 +130,15 @@
                 const randomBase = rectangles[randomBaseIndex].parentElement;
                 rectangles.forEach(rectangle => rectangle.style.display = 'none');
                 rectangles[randomBaseIndex].style.display = 'block';
+
+                // Move the rectangle to the center of the selected base
+                const baseRect = randomBase.getBoundingClientRect();
+                const rectWidth = rectangles[randomBaseIndex].offsetWidth;
+                const rectHeight = rectangles[randomBaseIndex].offsetHeight;
+                const rectX = baseRect.left + baseRect.width / 2 - rectWidth / 2;
+                const rectY = baseRect.top + baseRect.height / 2 - rectHeight / 2;
+                rectangles[randomBaseIndex].style.left = `${rectX}px`;
+                rectangles[randomBaseIndex].style.top = `${rectY}px`;
             });
         });
     </script>
